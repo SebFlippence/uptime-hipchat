@@ -45,7 +45,7 @@ var registerNewEventsHipchat = function(room) {
 var registerNewPingsHipchat = function(room) {
     Ping.on('afterInsert', function(ping) {
         ping.findCheck(function(err, check) {
-            if (!ping.isUp) {
+            if (!ping.isUp && check.downtime > 0) {
                 room.sendNotification('[Uptime] The application ' + check.name  + ' responded with error "' + ping.error + '"', 'red');
             }
         });
